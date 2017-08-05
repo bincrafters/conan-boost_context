@@ -3,11 +3,13 @@ from conans import ConanFile, tools, os
 class BoostContextConan(ConanFile):
     name = "Boost.Context"
     version = "1.64.0"
-    generators = "txt"
+    generators = "txt" 
+    settings = "os", "arch", "compiler", "build_type"
     url = "https://github.com/boostorg/context"
     description = "Please visit http://www.boost.org/doc/libs/1_64_0/libs/libraries.htm"
     license = "www.boost.org/users/license.html"
     lib_short_name = "context"
+    build_requires = "Boost.Build/1.64.0@bincrafters/testing" 
     requires =  "Boost.Assert/1.64.0@bincrafters/testing", \
                       "Boost.Config/1.64.0@bincrafters/testing", \
                       "Boost.Pool/1.64.0@bincrafters/testing", \

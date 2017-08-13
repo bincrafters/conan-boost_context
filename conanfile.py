@@ -14,7 +14,8 @@ class BoostContextConan(ConanFile):
                       "Boost.Config/1.64.0@bincrafters/testing", \
                       "Boost.Pool/1.64.0@bincrafters/testing", \
                       "Boost.Predef/1.64.0@bincrafters/testing", \
-                      "Boost.Smart_Ptr/1.64.0@bincrafters/testing"
+                      "Boost.Smart_Ptr/1.64.0@bincrafters/testing", \
+                      "Boost.Level11Group/1.64.0@bincrafters/testing"
 
                       #assert1 config0 pool11 predef0 smart_ptr4
                       
@@ -32,11 +33,18 @@ class BoostContextConan(ConanFile):
           'gcc': 'gcc',
           'Visual Studio': 'msvc',
           'clang': 'clang',
-          'apple-clang': 'darwin'}
+          'apple-clang': 'clang'}
 
         b2_toolset = toolsets[str(self.settings.compiler)]
         
         self.run(b2_full_path + " -j4 -a --hash=yes toolset=" + b2_toolset)
+        
+        with open(os.path.join(self.build_folder,"stage","lib","jamroot.jam"),"a") as f:
+            f.write("""
+import feature ;
+feature.feature segmented-stacks : on : optional propagated composite ;
+feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
+""")
         
     def package(self):
         include_dir = os.path.join(self.build_folder, self.lib_short_name, "include")

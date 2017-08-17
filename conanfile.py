@@ -26,12 +26,7 @@ class BoostContextConan(ConanFile):
                      .format(self.version, lib_short_name)) 
 
     def build(self):
-        boost_build = self.deps_cpp_info["Boost.Build"]
-        b2_bin_name = "b2.exe" if self.settings.os == "Windows" else "b2"
-        b2_bin_dir_name = boost_build.bindirs[0]
-        b2_full_path = os.path.join(boost_build.rootpath, b2_bin_dir_name, b2_bin_name)
-        
-        self.run(b2_full_path + " -j4 -a --hash=yes")
+        self.run(self.deps_user_info['Boost.Generator'].b2_command)
         
         with open(os.path.join(self.build_folder,"stage","lib","jamroot.jam"),"a") as f:
             f.write("""

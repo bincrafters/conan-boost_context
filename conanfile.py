@@ -13,13 +13,13 @@ class BoostContextConan(ConanFile):
     lib_short_names = ["context"]
     options = {"shared": [True, False]}
     default_options = "shared=False"
-    build_requires = "Boost.Generator/0.0.1@bincrafters/testing"
-    requires =  "Boost.Assert/1.65.1@bincrafters/testing", \
-                      "Boost.Config/1.65.1@bincrafters/testing", \
-                      "Boost.Pool/1.65.1@bincrafters/testing", \
-                      "Boost.Predef/1.65.1@bincrafters/testing", \
-                      "Boost.Smart_Ptr/1.65.1@bincrafters/testing", \
-                      "Boost.Level11Group/1.65.1@bincrafters/testing"
+    build_requires = "Boost.Generator/1.64.0@bincrafters/testing"
+    requires =  "Boost.Assert/1.64.0@bincrafters/testing", \
+                      "Boost.Config/1.64.0@bincrafters/testing", \
+                      "Boost.Pool/1.64.0@bincrafters/testing", \
+                      "Boost.Predef/1.64.0@bincrafters/testing", \
+                      "Boost.Smart_Ptr/1.64.0@bincrafters/testing", \
+                      "Boost.Level11Group/1.64.0@bincrafters/testing"
 
                       #assert1 config0 pool11 predef0 smart_ptr4
                       

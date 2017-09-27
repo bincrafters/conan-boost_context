@@ -32,7 +32,7 @@ class BoostContextConan(ConanFile):
             os.rename(lib_short_name + "-" + archive_name, lib_short_name)
 
     def build(self):
-        self.run(self.deps_user_info['Boost.Generator'].b2_command)
+        self.run(self.deps_user_info['Boost.Generator'].b2_command + " " + self.b2_args)
         
         with open(os.path.join(self.build_folder,"stage","lib","jamroot.jam"),"a") as f:
             f.write("""
@@ -51,3 +51,34 @@ feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
         self.user_info.lib_short_names = ",".join(self.lib_short_names)
         self.cpp_info.libs = self.collect_libs()
         self.cpp_info.defines.append("BOOST_ALL_NO_LIB=1")
+
+    @property
+    def b2_args(self):
+        binary_format_arg = "binary-format="+self.b2_binary_format if self.b2_binary_format else ""
+        abi_arg = "abi="+self.b2_abi if self.b2_abi else ""
+        return binary_format_arg+" "+abi_arg
+
+    @property
+    def b2_binary_format(self):
+        if self.settings.os == "iOS" or self.settings.os == "Macos":
+            return "mach-o"
+        elif self.settings.os == "Android" or self.settings.os == "Linux":
+            return "elf"
+        elif self.settings.os == "Windows":
+            return  "pe"
+        else:
+            return None
+
+    @property
+    def b2_abi(self):
+        if str(self.settings.arch).startswith('x86'):
+            if self.settings.os == "Windows":
+                return "ms"
+            else:
+                return "sysv"
+        elif str(self.settings.arch).startswith('ppc'):
+            return "sysv"
+        elif str(self.settings.arch).startswith('arm'):
+            return "aapcs"
+        else:
+            return None

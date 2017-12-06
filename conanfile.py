@@ -7,12 +7,13 @@ class BoostContextConan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
     requires = \
+        "Boost.Generator/1.65.1@bincrafters/testing", \
         "Boost.Assert/1.65.1@bincrafters/testing", \
         "Boost.Config/1.65.1@bincrafters/testing", \
         "Boost.Pool/1.65.1@bincrafters/testing", \
         "Boost.Predef/1.65.1@bincrafters/testing", \
         "Boost.Smart_Ptr/1.65.1@bincrafters/testing", \
-        "Boost.Level11Group/1.65.1@bincrafters/testing"
+        "Boost.Thread/1.65.1@bincrafters/testing"
     lib_short_names = ["context"]
     is_header_only = False
 
@@ -63,18 +64,13 @@ feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
     # BEGIN
 
     url = "https://github.com/bincrafters/conan-boost-context"
-    description = "Please visit http://www.boost.org/doc/libs/1_65_1/libs/libraries.htm"
+    description = "Please visit http://www.boost.org/doc/libs/1_65_1"
     license = "www.boost.org/users/license.html"
-    settings = "os", "arch", "compiler", "build_type"
     short_paths = True
     build_requires = "Boost.Generator/1.65.1@bincrafters/testing"
     generators = "boost"
+    settings = "os", "arch", "compiler", "build_type"
 
-    def package_id(self):
-        if self.is_header_only:
-            self.info.header_only()
-
-    # pylint: disable=unused-import
     @property
     def env(self):
         try:

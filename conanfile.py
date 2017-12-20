@@ -98,5 +98,8 @@ feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
         result = super(self.__class__, self).env
         result['PYTHONPATH'] = [os.path.dirname(__file__)] + result.get('PYTHONPATH',[])
         return result
+    @property
+    def build_policy_missing(self):
+        return (getattr(self, 'is_in_cycle_group', False) and not getattr(self, 'is_header_only', True)) or super(self.__class__, self).build_policy_missing
 
     # END

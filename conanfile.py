@@ -7,7 +7,7 @@ from conans import ConanFile, tools
 class BoostContextConan(ConanFile):
     name = "boost_context"
     version = "1.66.0"
-    url = "https://github.com/bincrafters/conan-boost-context"
+    url = "https://github.com/bincrafters/conan-boost_context"
     
     lib_short_names = ["context"]
     is_header_only = False

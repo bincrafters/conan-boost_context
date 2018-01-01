@@ -25,7 +25,7 @@ class BoostContextConan(ConanFile):
         "boost_thread/1.66.0@bincrafters/testing"
     )
 
-    def build_after(self):
+    def build_additional(self):
         import os
         with open(os.path.join(self.build_folder, "context", "lib", "jamroot.jam"), "a") as f:
             f.write("""

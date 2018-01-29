@@ -17,13 +17,13 @@ class BoostContextConan(ConanFile):
     default_options = "shared=False"
     
     requires = (
-        "boost_package_tools/1.66.0@bincrafters/stable",
-        "boost_assert/1.66.0@bincrafters/stable",
-        "boost_config/1.66.0@bincrafters/stable",
-        "boost_pool/1.66.0@bincrafters/stable",
-        "boost_predef/1.66.0@bincrafters/stable",
-        "boost_smart_ptr/1.66.0@bincrafters/stable",
-        "boost_thread/1.66.0@bincrafters/stable"
+        "boost_package_tools/1.66.0@bincrafters/testing",
+        "boost_assert/1.66.0@bincrafters/testing",
+        "boost_config/1.66.0@bincrafters/testing",
+        "boost_pool/1.66.0@bincrafters/testing",
+        "boost_predef/1.66.0@bincrafters/testing",
+        "boost_smart_ptr/1.66.0@bincrafters/testing",
+        "boost_thread/1.66.0@bincrafters/testing"
     )
 
     def build_additional(self):
@@ -74,7 +74,7 @@ feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
 
     description = "Please visit http://www.boost.org/doc/libs/1_66_0"
     license = "BSL-1.0"
-    build_requires = "boost_generator/1.66.0@bincrafters/stable"
+    build_requires = "boost_generator/1.66.0@bincrafters/testing"
     short_paths = True
     generators = "boost"
     settings = "os", "arch", "compiler", "build_type"

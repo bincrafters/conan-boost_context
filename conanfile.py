@@ -78,7 +78,7 @@ feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
 
     # BEGIN
 
-    description = "Please visit http://www.boost.org/doc/libs/1_66_0"
+    description = "Please visit http://www.boost.org/doc/libs/1_65_1"
     license = "BSL-1.0"
     build_requires = "boost_generator/1.65.1@bincrafters/testing"
     short_paths = True

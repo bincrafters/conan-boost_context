@@ -15,7 +15,6 @@ class BoostContextConan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
 
-    # TODO: thread
     requires = (
         "boost_assert/1.67.0@bincrafters/testing",
         "boost_config/1.67.0@bincrafters/testing",

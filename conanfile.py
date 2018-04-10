@@ -6,24 +6,23 @@ from conans import ConanFile, tools
 
 class BoostContextConan(ConanFile):
     name = "boost_context"
-    version = "1.66.0"
-    url = "https://github.com/bincrafters/conan-boost_context"
+    version = "1.67.0"
     author = "Bincrafters <bincrafters@gmail.com>"
     exports = ["LICENSE.md"]
     lib_short_names = ["context"]
     is_header_only = False
-    
+
     options = {"shared": [True, False]}
     default_options = "shared=False"
-    
+
+    # TODO: thread
     requires = (
-        "boost_package_tools/1.66.0@bincrafters/testing",
-        "boost_assert/1.66.0@bincrafters/testing",
-        "boost_config/1.66.0@bincrafters/testing",
-        "boost_pool/1.66.0@bincrafters/testing",
-        "boost_predef/1.66.0@bincrafters/testing",
-        "boost_smart_ptr/1.66.0@bincrafters/testing",
-        "boost_thread/1.66.0@bincrafters/testing"
+        "boost_assert/1.67.0@bincrafters/testing",
+        "boost_config/1.67.0@bincrafters/testing",
+        "boost_package_tools/1.67.0@bincrafters/testing",
+        "boost_pool/1.67.0@bincrafters/testing",
+        "boost_predef/1.67.0@bincrafters/testing",
+        "boost_smart_ptr/1.67.0@bincrafters/testing"
     )
 
     def build_additional(self):
@@ -78,12 +77,13 @@ feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
 
     # BEGIN
 
-    description = "Please visit http://www.boost.org/doc/libs/1_66_0"
+    url = "https://github.com/bincrafters/conan-boost_context"
+    description = "Please visit http://www.boost.org/doc/libs/1_67_0"
     license = "BSL-1.0"
-    build_requires = "boost_generator/1.66.0@bincrafters/testing"
     short_paths = True
     generators = "boost"
     settings = "os", "arch", "compiler", "build_type"
+    build_requires = "boost_generator/1.67.0@bincrafters/testing"
 
     def package_id(self):
         getattr(self, "package_id_additional", lambda:None)()
@@ -111,7 +111,5 @@ feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
             import boost_package_tools  # pylint: disable=F0401
             boost_package_tools.package_info(self)
         getattr(self, "package_info_additional", lambda:None)()
-
-
 
     # END

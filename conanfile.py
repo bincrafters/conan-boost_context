@@ -1,51 +1,50 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from conans import ConanFile, tools
+from conans import python_requires, tools
+import os
+    
 
+base = python_requires("boost_base/1.67.0@bincrafters/testing")
 
-class BoostContextConan(ConanFile):
+class BoostContextConan(base.BoostBaseConan):
     name = "boost_context"
-    version = "1.67.0"
-    author = "Bincrafters <bincrafters@gmail.com>"
-    exports = ["LICENSE.md"]
+    url = "https://github.com/bincrafters/conan-boost_context"
     lib_short_names = ["context"]
-    is_header_only = False
-
     options = {"shared": [True, False]}
     default_options = "shared=False"
-
+    b2_requires = [
+        "boost_assert",
+        "boost_config",
+        "boost_pool",
+        "boost_predef",
+        "boost_smart_ptr"
+    ]
     source_only_deps = [
         "thread"
     ]
 
-    requires = (
-        "boost_assert/1.67.0@bincrafters/testing",
-        "boost_config/1.67.0@bincrafters/testing",
-        "boost_package_tools/1.67.0@bincrafters/testing",
-        "boost_pool/1.67.0@bincrafters/testing",
-        "boost_predef/1.67.0@bincrafters/testing",
-        "boost_smart_ptr/1.67.0@bincrafters/testing"
-    )
-
     def build_additional(self):
-        import os
-        with open(os.path.join(self.build_folder, "context", "lib", "jamroot.jam"), "a") as f:
-            f.write("""
+        jam_content = """
 import feature ;
 feature.feature segmented-stacks : on : optional propagated composite ;
 feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
-""")
+"""
+        tools.save(
+            os.path.join(self.build_folder, "context", "lib", "jamroot.jam"),
+            jam_content,
+            append=True,
+        )
 
-    def b2_options(self, lib_name=None):
-        # pylint: disable=unused-argument
-        return " " + self.b2_args
+    def get_b2_options(self):
+        return self.b2_args
 
     @property
     def b2_args(self):
-        binary_format_arg = "binary-format=" + self.b2_binary_format if self.b2_binary_format else ""
-        abi_arg = "abi=" + self.b2_abi if self.b2_abi else ""
-        return binary_format_arg + " " + abi_arg
+        return {
+            "binary-format" : self.b2_binary_format if self.b2_binary_format else "",
+            "abi" : self.b2_abi if self.b2_abi else "",
+        }
 
     @property
     def b2_binary_format(self):
@@ -72,47 +71,4 @@ feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
         else:
             return None
 
-    def package_id_additional(self):
-        boost_deps_only = [dep_name for dep_name in self.info.requires.pkg_names if dep_name.startswith("boost_")]
 
-        for dep_name in boost_deps_only:
-            self.info.requires[dep_name].full_version_mode()
-
-    # BEGIN
-
-    url = "https://github.com/bincrafters/conan-boost_context"
-    description = "Please visit http://www.boost.org/doc/libs/1_67_0"
-    license = "BSL-1.0"
-    short_paths = True
-    generators = "boost"
-    settings = "os", "arch", "compiler", "build_type"
-    build_requires = "boost_generator/1.67.0@bincrafters/testing"
-
-    def package_id(self):
-        getattr(self, "package_id_additional", lambda:None)()
-
-    def source(self):
-        with tools.pythonpath(self):
-            import boost_package_tools  # pylint: disable=F0401
-            boost_package_tools.source(self)
-        getattr(self, "source_additional", lambda:None)()
-
-    def build(self):
-        with tools.pythonpath(self):
-            import boost_package_tools  # pylint: disable=F0401
-            boost_package_tools.build(self)
-        getattr(self, "build_additional", lambda:None)()
-
-    def package(self):
-        with tools.pythonpath(self):
-            import boost_package_tools  # pylint: disable=F0401
-            boost_package_tools.package(self)
-        getattr(self, "package_additional", lambda:None)()
-
-    def package_info(self):
-        with tools.pythonpath(self):
-            import boost_package_tools  # pylint: disable=F0401
-            boost_package_tools.package_info(self)
-        getattr(self, "package_info_additional", lambda:None)()
-
-    # END

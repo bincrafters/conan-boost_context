@@ -19,7 +19,7 @@ class BoostContextConan(base.BoostBaseConan):
         "boost_pool",
         "boost_predef",
         "boost_smart_ptr",
-        "thread",
+        "boost_thread",
     ]
 
     def build_additional(self):

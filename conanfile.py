@@ -18,10 +18,8 @@ class BoostContextConan(base.BoostBaseConan):
         "boost_config",
         "boost_pool",
         "boost_predef",
-        "boost_smart_ptr"
-    ]
-    source_only_deps = [
-        "thread"
+        "boost_smart_ptr",
+        "thread",
     ]
 
     def build_additional(self):

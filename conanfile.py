@@ -3,9 +3,9 @@
 
 from conans import python_requires, tools
 import os
-    
 
-base = python_requires("boost_base/1.67.0@bincrafters/testing")
+
+base = python_requires("boost_base/1.68.0@bincrafters/testing")
 
 class BoostContextConan(base.BoostBaseConan):
     name = "boost_context"
@@ -13,13 +13,13 @@ class BoostContextConan(base.BoostBaseConan):
     lib_short_names = ["context"]
     options = {"shared": [True, False]}
     default_options = "shared=False"
+    source_only_deps = ["thread"]
     b2_requires = [
         "boost_assert",
         "boost_config",
         "boost_pool",
         "boost_predef",
-        "boost_smart_ptr",
-        "boost_thread",
+        "boost_smart_ptr"
     ]
 
     def build_additional(self):
@@ -68,5 +68,3 @@ feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
             return "aapcs"
         else:
             return None
-
-

@@ -13,13 +13,13 @@ class BoostContextConan(base.BoostBaseConan):
     lib_short_names = ["context"]
     options = {"shared": [True, False]}
     default_options = "shared=False"
-    source_only_deps = ["thread"]
     b2_requires = [
         "boost_assert",
         "boost_config",
         "boost_pool",
         "boost_predef",
-        "boost_smart_ptr"
+        "boost_smart_ptr",
+        "boost_thread"
     ]
 
     def build_additional(self):

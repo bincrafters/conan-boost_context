@@ -9,6 +9,7 @@ base = python_requires("boost_base/1.67.0@bincrafters/testing")
 
 class BoostContextConan(base.BoostBaseConan):
     name = "boost_context"
+    version = "1.67.0"
     url = "https://github.com/bincrafters/conan-boost_context"
     lib_short_names = ["context"]
     options = {"shared": [True, False]}
